@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const glob = require( 'glob' );
 var sizeOf = require('image-size');
