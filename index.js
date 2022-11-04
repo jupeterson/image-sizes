@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 const glob = require( 'glob' );
 var sizeOf = require('image-size');
@@ -11,6 +11,7 @@ var sizeOf = require('image-size');
             // const images = await fs.readdir(
             //     path.join(process.env.GITHUB_WORKSPACE, 'images')
             // );
+            core.notice("Calling my action image-sizes");
             const images = glob.sync( 'images/**/*.jpg').map(fileName => {
                 console.log("fileName: ",  fileName );
                 const dimensions = sizeOf(fileName);
@@ -21,8 +22,7 @@ var sizeOf = require('image-size');
                 };
             });
             console.log("images: ",  images );
-            await fs.writeFile('image-sizes.json', JSON.stringify(images));
-            core.notice("Calling my action image-sizes");
+            fs.writeFileSync('image-sizes.json', JSON.stringify(images));
             core.notice(`Number of images in repo: ${images.length}`)
         } catch (e) {
             core.setFailed(e.message)
