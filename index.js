@@ -3,15 +3,27 @@ const github = require("@actions/github");
 const fs = require('fs');
 const path = require('path');
 const glob = require( 'glob' );
-var sizeOf = require('image-size');
+const sizeOf = require('image-size');
 
 (
     async () => {
         try {
-            // const images = await fs.readdir(
-            //     path.join(process.env.GITHUB_WORKSPACE, 'images')
-            // );
-            core.notice("Calling my action image-sizes");
+            const githubToken = core.getInput('repo_token');
+            const octokit = github.getOctokit(githubToken);
+            core.notice("Executing my action image-sizes");
+            console.log("All images in current directory and below" );
+
+            const tempImages = glob.sync( './**/*.jpg').map(fileName => {
+                const dimensions = sizeOf(fileName);
+                const fileInformation = {
+                    imagePath: fileName,
+                    height: dimensions.height,
+                    width: dimensions.width
+                };
+                console.log(fileInformation );
+                return fileInformation;
+            });
+            console.log("All images in 'images' directory and below" );
             const images = glob.sync( 'images/**/*.jpg').map(fileName => {
                 const dimensions = sizeOf(fileName);
                 const fileInformation = {
