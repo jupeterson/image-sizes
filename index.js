@@ -21,7 +21,7 @@ var sizeOf = require('image-size');
                 };
             });
             console.log("images: ",  images );
-            await fs.writeFile('image-sizes.json', JSON.stringify(images))
+            await fs.writeFile('image-sizes.json', JSON.stringify(images));
             core.notice("Calling my action image-sizes");
             core.notice(`Number of images in repo: ${images.length}`)
         } catch (e) {
