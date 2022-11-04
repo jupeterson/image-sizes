@@ -21,9 +21,10 @@ var sizeOf = require('image-size');
                     width: dimensions.width
                 };
             });
-            console.log("images: ",  images );
-            fs.writeFileSync('image-sizes.json', JSON.stringify(images));
             core.notice(`Number of images in repo: ${images.length}`)
+            fs.writeFileSync('images/image-sizes.json', JSON.stringify(images));
+            
+            core.notice(`Written file 'image-sizes.json'`)
         } catch (e) {
             core.setFailed(e.message)
         }
