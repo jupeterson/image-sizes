@@ -3,6 +3,7 @@ const github = require("@actions/github");
 const fs = require('fs');
 const path = require('path');
 const glob = require( 'glob' );
+var sizeOf = require('image-size');
 
 (
     async () => {
@@ -10,11 +11,16 @@ const glob = require( 'glob' );
             // const images = await fs.readdir(
             //     path.join(process.env.GITHUB_WORKSPACE, 'images')
             // );
-            let images = [];
-            glob( 'images/**/*.jpg', function( err, files ) {
-                console.log( files );
-                images = [...images, ...files];
+            const images = glob.sync( 'images/**/*.jpg').map(fileName => {
+                console.log("fileName: ",  fileName );
+                const dimensions = sizeOf(fileName);
+                return {
+                    imagePath: filename,
+                    height: dimensions.height,
+                    width: dimensions.width
+                };
             });
+            console.log("images: ",  images );
             core.notice("Calling my action image-sizes");
             core.notice(`Number of images in repo: ${images.length}`)
         } catch (e) {
