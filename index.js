@@ -15,7 +15,7 @@ var sizeOf = require('image-size');
                 console.log("fileName: ",  fileName );
                 const dimensions = sizeOf(fileName);
                 return {
-                    imagePath: filename,
+                    imagePath: fileName,
                     height: dimensions.height,
                     width: dimensions.width
                 };
