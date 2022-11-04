@@ -13,13 +13,14 @@ var sizeOf = require('image-size');
             // );
             core.notice("Calling my action image-sizes");
             const images = glob.sync( 'images/**/*.jpg').map(fileName => {
-                console.log("fileName: ",  fileName );
                 const dimensions = sizeOf(fileName);
-                return {
+                const fileInformation = {
                     imagePath: fileName,
                     height: dimensions.height,
                     width: dimensions.width
                 };
+                console.log(fileInformation );
+                return fileInformation;
             });
             core.notice(`Number of images in repo: ${images.length}`)
             fs.writeFileSync('images/image-sizes.json', JSON.stringify(images));
