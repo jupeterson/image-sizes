@@ -1,0 +1,5 @@
+name: "Calculate all file sizes"
+description: "Will calculate sizes for all images in repository"
+runs:
+  using: node16
+  main: index.js
